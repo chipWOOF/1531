@@ -1,5 +1,10 @@
 // YOU MAY MODIFY THIS OBJECT BELOW
-let data = {};
+let data = {
+  users: [],
+  quizzes: [],
+  nextUserId: 1,
+  nextQuizId: 1,
+};
 
 // YOU MAY MODIFY THIS OBJECT ABOVE
 
@@ -21,4 +26,8 @@ function getData() {
   return data;
 }
 
-export { getData };
+function setData(newData) {
+  data = newData;
+}
+
+export { getData, setData };
