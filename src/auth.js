@@ -7,7 +7,7 @@
 
 Given a registered user's email and password, return their userId value.
 */
-function adminAuthRegister(email, password, nameFirst, nameLast){
+export function adminAuthRegister(email, password, nameFirst, nameLast){
     return {
         userId: 1
     };
@@ -22,7 +22,7 @@ Given an admin user's userId, return details about the user.
 "name" is the first and last name concatenated with a single space between them.
 */
 
-function adminAuthLogin(email, password) {
+export function adminAuthLogin(email, password) {
     return {
         userId: 1
     }; 

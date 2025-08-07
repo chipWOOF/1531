@@ -29,29 +29,27 @@ describe('adminAuthRegister', () => {
         nameLast: "doe",
     }
     test('Successful register', () => {
-        expect(adminAuthRegister(user.email, user.password, user.nameFirst, user.nameLast)
-            .toStrictEqual(any(Number)));
+        expect(adminAuthRegister(user.emial, user.password, user.nameFirst, user.nameLast))
+            .toStrictEqual(expect.any(Number));
     });
     //test invalid email
     //test already existing email
     test('email in use already', () => {
         adminAuthRegister(user.email, user.password, user.nameFirst, user.nameLast);
-        expect(adminAuthRegister(user.email, user.password, user.nameFirst, user.nameLast)
+        expect(adminAuthRegister(user.email, user.password, user.nameFirst, user.nameLast))
             .toEqual({
                 error: 'INVALID_EMAIL',
                 message: expect.any(String),
-            })
-        );
+            });
     });
     //test not an email
     test('invalid email', () => {
-        expect(adminAuthRegister('notanemail', user.password, user.nameFirst, user.nameLast)
+        expect(adminAuthRegister('notanemail', user.password, user.nameFirst, user.nameLast))
             .toEqual({
                 error: 'INVALID_EMAIL',
                 message: expect.any(String),
-            })
-        );
-    })
+            });
+    });
 
     //test invalid first names all cases
     const invalidNames = ['ww', '12345678901234567890123', '?:[]df,;-='];
@@ -79,3 +77,34 @@ describe('adminAuthRegister', () => {
     });
 });
 
+describe('adminAuthLogin', () => {
+    const user = {
+        userId: '1',
+        email: "test@example.com",
+        password: "1234567A",
+        nameFirst: "john",
+        nameLast: "doe",
+    }
+    //successful login
+    beforeEach(() => {
+        adminAuthRegister(user.email, user.password, user.nameFirst, user.nameLast);
+    });
+
+    test('successful login', () => {
+        expect(adminAuthLogin(user.email, user.password)).toBe(user.Id);
+    });
+
+    test('incorrect password', () => {
+        expect(adminAuthLogin(user.email, 'notthepassword')).toStrictEqual({
+            error: 'INVALID_CREDENTIALS',
+            message: expect.any(String)
+        });
+    });
+
+    test('email does not exist', () => {
+        expect(adminAuthLogin('notanemail', user.password)).toStrictEqual({
+            error: 'INVALID_CREDENTIALS',
+            message: expect.any(String)
+        })
+    })
+});
